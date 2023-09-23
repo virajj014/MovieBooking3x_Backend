@@ -5,6 +5,12 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const PORT = 8000;
 const cookieParser = require('cookie-parser');
+
+const authRoutes = require('./Routes/Auth');
+const adminRoutes = require('./Routes/Admin');
+const movieRoutes = require('./Routes/Movie');
+
+
 require('dotenv').config();
 require('./db')
 
@@ -25,6 +31,9 @@ app.use(
 );
 app.use(cookieParser());
 
+app.use('/auth', authRoutes);
+app.use('/admin', adminRoutes);
+app.use('/movie', movieRoutes);
 
 
 app.get('/', (req, res) => {
@@ -34,3 +43,4 @@ app.get('/', (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
+
