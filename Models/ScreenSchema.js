@@ -29,7 +29,7 @@ const screenSchema = new mongoose.Schema({
                 required: true
             },
             showTime: String,
-            notavailableseats: [String],
+            notAvailableSeats: [String],
             showDate: Date
         }
     ]

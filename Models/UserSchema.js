@@ -19,6 +19,10 @@ const userSchema = new mongoose.Schema({
     bookings:{
         type: Array,
         default: [],
+    },
+    city:{
+        type: String,
+        required: true,
     } 
 },{
     timestamps: true
