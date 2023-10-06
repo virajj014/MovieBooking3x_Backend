@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 function checkAuthToken(req, res, next) {
     const authToken = req.cookies.authToken;
     const refreshToken = req.cookies.refreshToken;
-
+    console.log(authToken, refreshToken);
     // check authtoken
     // check refresh
     // authtoken is not exp -> user logged in
@@ -14,7 +14,7 @@ function checkAuthToken(req, res, next) {
 
 
     if (!authToken || !refreshToken) {
-        return res.status(401).json({ message: 'Authentication failed: No authToken or refreshToken provided' , ok : false });
+        return res.status(401).json({ message: 'Authentication failed: No authToken or refreshToken provided', ok: false });
     }
 
 
@@ -29,10 +29,10 @@ function checkAuthToken(req, res, next) {
                     return res.status(401).json({ message: 'Authentication failed: Both tokens are invalid', ok: false });
                 }
 
-                else{
+                else {
                     const newAuthToken = jwt.sign({ userId: refreshDecoded.userId }, process.env.JWT_SECRET_KEY, { expiresIn: '10m' });
                     const newRefreshToken = jwt.sign({ userId: refreshDecoded.userId }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '30m' });
-                
+
                     res.cookie('authToken', newAuthToken, { httpOnly: true });
                     res.cookie('refreshToken', newRefreshToken, { httpOnly: true });
 
@@ -46,7 +46,7 @@ function checkAuthToken(req, res, next) {
             // 2. not expired
         }
 
-        else{
+        else {
             req.userId = decoded.userId;
             next();
         }
